@@ -16,14 +16,12 @@ jobs:
     steps:
       - name: checkout repo
         uses: actions/checkout@v2
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
       - name: setup node
         uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: 'pnpm'
+          cache: 'yarn'
       - name: install dependencies
-        run: pnpm install
+        run: yarn install
       - name: run tests
         run: npx cypress run
