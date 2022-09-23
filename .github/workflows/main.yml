@@ -1,0 +1,28 @@
+name: schedule
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 20 * *'
+
+env:
+  COMPANY_ID: ${{ secrets.COMPANY_ID }}
+  USERNAME: ${{ secrets.USERNAME }}
+  PASSWORD: ${{ secrets.PASSWORD }}
+
+jobs:
+  Run-Schedule:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v2
+      - name: setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'yarn'
+      - name: install dependencies
+        run: yarn install
+      - name: install playwright
+        run: npx playwright install-deps chromium
+      - name: run automation
+        run: yarn ci
